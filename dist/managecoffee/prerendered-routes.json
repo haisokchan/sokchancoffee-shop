@@ -1,0 +1,15 @@
+{
+  "routes": {
+    "/": {},
+    "/cart": {},
+    "/checkout": {},
+    "/customer": {},
+    "/dashboard": {},
+    "/login": {},
+    "/order": {},
+    "/payment": {},
+    "/product": {},
+    "/register": {},
+    "/supplier": {}
+  }
+}

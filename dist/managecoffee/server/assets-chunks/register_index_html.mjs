@@ -1,0 +1,18 @@
+export default `<!DOCTYPE html><html lang="en" data-beasties-container><head>
+  <meta charset="utf-8">
+  <title>Managecoffee</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<link rel="stylesheet" href="styles-5INURTSO.css"><style ng-app-id="ng">.page[_ngcontent-ng-c2332085572]{min-height:100vh;display:grid;place-items:center;padding:20px;background:#f6f7fb}.card[_ngcontent-ng-c2332085572]{width:100%;max-width:420px;background:#fff;padding:20px;border-radius:12px;box-shadow:0 10px 30px #00000014}label[_ngcontent-ng-c2332085572]{display:block;margin-top:12px;font-weight:600}input[_ngcontent-ng-c2332085572], select[_ngcontent-ng-c2332085572]{width:100%;padding:10px;margin-top:6px;border:1px solid #ddd;border-radius:8px}button[_ngcontent-ng-c2332085572]{width:100%;padding:10px;margin-top:16px;border:0;border-radius:8px;background:#111;color:#fff;cursor:pointer}button[_ngcontent-ng-c2332085572]:disabled{opacity:.6;cursor:not-allowed}small[_ngcontent-ng-c2332085572]{color:#b00020;display:block;margin-top:6px}.error[_ngcontent-ng-c2332085572]{color:#b00020;margin-top:10px}.muted[_ngcontent-ng-c2332085572]{margin-top:12px;color:#666}a[_ngcontent-ng-c2332085572]{text-decoration:none}</style></head>
+<body>
+  <app-root ng-version="21.0.6" ng-server-context="ssg"><router-outlet></router-outlet><app-register _nghost-ng-c2332085572><div _ngcontent-ng-c2332085572 class="page"><div _ngcontent-ng-c2332085572 class="card"><h2 _ngcontent-ng-c2332085572>Register</h2><form _ngcontent-ng-c2332085572 novalidate class="ng-untouched ng-pristine ng-invalid"><label _ngcontent-ng-c2332085572>Username</label><input _ngcontent-ng-c2332085572 type="text" formcontrolname="username" placeholder="username" value class="ng-untouched ng-pristine ng-invalid"><!----><label _ngcontent-ng-c2332085572>Email</label><input _ngcontent-ng-c2332085572 type="email" formcontrolname="email" placeholder="you@example.com" value class="ng-untouched ng-pristine ng-invalid"><!----><label _ngcontent-ng-c2332085572>Password</label><input _ngcontent-ng-c2332085572 type="password" formcontrolname="password" placeholder="••••" value class="ng-untouched ng-pristine ng-invalid"><!----><label _ngcontent-ng-c2332085572>Phone (optional)</label><input _ngcontent-ng-c2332085572 type="text" formcontrolname="phone" placeholder="012345678" value class="ng-untouched ng-pristine ng-valid"><label _ngcontent-ng-c2332085572>Role</label><select _ngcontent-ng-c2332085572 formcontrolname="role" class="ng-untouched ng-pristine ng-valid"><option _ngcontent-ng-c2332085572 value="staff">staff</option><option _ngcontent-ng-c2332085572 value="manager">manager</option><option _ngcontent-ng-c2332085572 value="admin">admin</option></select><!----><button _ngcontent-ng-c2332085572 type="submit"> Create account </button></form><p _ngcontent-ng-c2332085572 class="muted"> Already have an account? <a _ngcontent-ng-c2332085572 routerlink="/login" href="/login">Login</a></p></div></div></app-register><!----></app-root>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+<script src="main-DGRBMQDO.js" type="module"></script>
+
+</body></html>`;

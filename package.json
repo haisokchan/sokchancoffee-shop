@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "coffee POS System",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
+"scripts": {
+  "build": "ng build --configuration production",
+  "start": "node server.js",
+  "dev": "nodemon server.js"
+},
   "dependencies": {
     "axios": "^1.13.4",
     "bcryptjs": "^2.4.3",
@@ -21,4 +22,5 @@
   "devDependencies": {
     "nodemon": "^3.0.1"
   }
+  
 }
