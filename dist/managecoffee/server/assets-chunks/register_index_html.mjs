@@ -13,6 +13,6 @@ export default `<!DOCTYPE html><html lang="en" data-beasties-container><head>
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
-<script src="main-DGRBMQDO.js" type="module"></script>
+<script src="main-HMDEZRUR.js" type="module"></script>
 
 </body></html>`;
