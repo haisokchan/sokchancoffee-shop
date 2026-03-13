@@ -4,23 +4,17 @@ const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 
-// ✅ Serve Angular static files (JS, CSS, images etc.)
+// ✅ Serve static files
 app.use(express.static(path.join(__dirname, 'dist/managecoffee/browser')));
 
-// ✅ Catch-all: send index.csr.html for ALL Angular routes
-// /login, /dashboard, /product, /cart etc. all go to Angular router
-// Only skip /api/* routes so your backend API still works
+// ✅ Catch-all MUST be after API routes in src/app.js
 app.get('*', (req, res, next) => {
+  // Skip API routes
   if (req.path.startsWith('/api')) return next();
-
+  
   res.sendFile(
     path.join(__dirname, 'dist/managecoffee/browser/index.csr.html'),
-    (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(500).send('Error loading application');
-      }
-    }
+    (err) => { if (err) res.status(500).send('Error loading app'); }
   );
 });
 
