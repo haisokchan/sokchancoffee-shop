@@ -4,23 +4,14 @@ const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 
-// ✅ Serve Angular static files (JS, CSS, images etc.)
-app.use(express.static(path.join(__dirname, 'dist/managecoffee/browser')));
+// ✅ dist is now built inside client folder
+app.use(express.static(path.join(__dirname, 'client/dist/managecoffee/browser')));
 
-// ✅ Catch-all: send index.csr.html for ALL Angular routes
-// /login, /dashboard, /product, /cart etc. all go to Angular router
-// Only skip /api/* routes so your backend API still works
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) return next();
-
   res.sendFile(
-    path.join(__dirname, 'dist/managecoffee/browser/index.csr.html'),
-    (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(500).send('Error loading application');
-      }
-    }
+    path.join(__dirname, 'client/dist/managecoffee/browser/index.csr.html'),
+    (err) => { if (err) res.status(500).send('Error loading app'); }
   );
 });
 
