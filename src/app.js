@@ -7,20 +7,25 @@ require('dotenv').config();
 const app = express();
 
 /**
- * ✅ CORS FIRST (before routes)
+ * ✅ FIX: CORS now allows both localhost AND Render production URL
  */
+const allowedOrigins = [
+  'http://localhost:4200',
+  'http://localhost:3000',
+  'https://sokchancoffee-shop.onrender.com',  // ✅ production
+];
+
 const corsOptions = {
   origin: (origin, cb) => {
+    // Allow requests with no origin (Postman, mobile apps, server-to-server)
     if (!origin) return cb(null, true);
 
-    const ok =
-      /^http:\/\/localhost:\d+$/.test(origin) ||
-      /^http:\/\/127\.0\.0\.1:\d+$/.test(origin);
+    if (allowedOrigins.includes(origin)) return cb(null, true);
 
-    if (ok) return cb(null, true);
     return cb(new Error(`CORS blocked: ${origin}`), false);
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
@@ -45,11 +50,7 @@ app.use('/api/customers', require('./routes/customer'));
 app.use('/api/products', require('./routes/product'));
 app.use('/api/payments', require('./routes/payment'));
 app.use('/api/suppliers', require('./routes/supplier'));
-
-// ✅ NEW: Upload route
 app.use('/api/upload', require('./routes/upload'));
-
-// ✅ NEW: Cart Telegram notification routes
 app.use('/api/cart', require('./routes/cart'));
 
 // Test route
@@ -57,11 +58,10 @@ app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is working!' });
 });
 
-// Error handler (keep AFTER routes)
+// Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  
-  // Handle multer errors
+
   if (err.name === 'MulterError') {
     if (err.code === 'LIMIT_FILE_SIZE') {
       return res.status(400).json({
@@ -70,7 +70,7 @@ app.use((err, req, res, next) => {
       });
     }
   }
-  
+
   res.status(500).json({
     success: false,
     message: 'Something went wrong!',
@@ -79,8 +79,7 @@ app.use((err, req, res, next) => {
 });
 
 // MongoDB
-const MONGODB_URI =
-  process.env.MONGODB_URI || 'mongodb://localhost:27017/coffee';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/coffee';
 
 mongoose
   .connect(MONGODB_URI)
