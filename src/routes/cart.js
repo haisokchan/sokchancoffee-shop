@@ -1,80 +1,55 @@
-// routes/cart.js - Enhanced Cart Routes with Validation Endpoints
-const express = require('express');
-const router = express.Router();
+// routes/cart.js — Cart routes: validation + persistence + reporting + print
+const express        = require('express');
+const router         = express.Router();
 const cartController = require('../controller/cartController');
 
-// Optional: Add authentication middleware if needed
-// const { protect } = require('../middleware/auth');
+// ─────────────────────────────────────────────────────────────
+// VALIDATION
+// ─────────────────────────────────────────────────────────────
+router.post('/validate-product',    cartController.validateProduct);
+router.post('/validate-cart',       cartController.validateCart);
+router.get( '/check-stock/:productId', cartController.checkProductStock);
+router.post('/check-stock-bulk',    cartController.bulkCheckStock);
 
-// ==========================================
-// ✅ VALIDATION ENDPOINTS
-// ==========================================
+// ─────────────────────────────────────────────────────────────
+// TELEGRAM NOTIFICATIONS (legacy — still used by cart.service.ts)
+// ─────────────────────────────────────────────────────────────
+router.post('/notify-add',          cartController.notifyItemAdded);
+router.post('/notify-summary',      cartController.sendCartSummary);
+router.post('/notify-checkout',     cartController.notifyCheckout);
+router.post('/notify-cleared',      cartController.notifyCartCleared);
 
-/**
- * @route   POST /api/cart/validate-product
- * @desc    Validate if a product can be added to cart
- * @access  Public
- * @body    { productId, quantity, currentCartQuantity }
- */
-router.post('/validate-product', cartController.validateProduct);
+// ─────────────────────────────────────────────────────────────
+// ✅ PERSISTENCE — save cart to DB
+// ─────────────────────────────────────────────────────────────
+router.post('/save',                cartController.saveCart);
 
-/**
- * @route   POST /api/cart/validate-cart
- * @desc    Validate entire cart before checkout
- * @access  Public
- * @body    { cartItems: [] }
- */
-router.post('/validate-cart', cartController.validateCart);
+// ─────────────────────────────────────────────────────────────
+// ✅ REPORT — list + filter saved carts
+// ─────────────────────────────────────────────────────────────
+router.get( '/snapshots',                           cartController.getCartSnapshots);
+router.get( '/snapshots/:id',                       cartController.getCartSnapshot);
+router.patch('/snapshots/:id/status',               cartController.updateCartStatus);
+router.delete('/snapshots/:id',                     cartController.deleteCartSnapshot);
 
-/**
- * @route   GET /api/cart/check-stock/:productId
- * @desc    Check current stock availability for a product
- * @access  Public
- */
-router.get('/check-stock/:productId', cartController.checkProductStock);
+// ─────────────────────────────────────────────────────────────
+// ✅ PRINT — receipt data for a saved cart
+// ─────────────────────────────────────────────────────────────
+router.get( '/snapshots/:id/print',                 cartController.printCart);
 
-/**
- * @route   POST /api/cart/check-stock-bulk
- * @desc    Check stock for multiple products at once
- * @access  Public
- * @body    { productIds: [] }
- */
-router.post('/check-stock-bulk', cartController.bulkCheckStock);
+// ─────────────────────────────────────────────────────────────
+// ✅ TELEGRAM TEXT — send saved cart text receipt to Telegram
+// ─────────────────────────────────────────────────────────────
+router.post('/snapshots/:id/telegram',              cartController.sendSnapshotToTelegram);
 
-// ==========================================
-// ✅ CART NOTIFICATION ENDPOINTS (WITH VALIDATION)
-// ==========================================
+// ─────────────────────────────────────────────────────────────
+// ✅ TELEGRAM IMAGE — render receipt as JPG → send as photo
+// ─────────────────────────────────────────────────────────────
+router.post('/snapshots/:id/send-image',            cartController.sendReceiptImage);
 
-/**
- * @route   POST /api/cart/notify-add
- * @desc    Send notification when item is added to cart (validates first)
- * @access  Public
- * @body    { item: { product, quantity }, cartTotal }
- */
-router.post('/notify-add', cartController.notifyItemAdded);
-
-/**
- * @route   POST /api/cart/notify-summary
- * @desc    Send complete cart summary to Telegram (validates first)
- * @access  Public
- * @body    { cartItems: [], customerInfo?: { name, phone } }
- */
-router.post('/notify-summary', cartController.sendCartSummary);
-
-/**
- * @route   POST /api/cart/notify-checkout
- * @desc    Send notification when checkout is initiated (validates first)
- * @access  Public
- * @body    { cartItems: [], customerInfo: { name, phone }, orderNumber?: string }
- */
-router.post('/notify-checkout', cartController.notifyCheckout);
-
-/**
- * @route   POST /api/cart/notify-cleared
- * @desc    Send notification when cart is cleared
- * @access  Public
- * @body    { itemCount: number, totalValue: number }
- */
-router.post('/notify-cleared', cartController.notifyCartCleared);
+// ─────────────────────────────────────────────────────────────
+// ✅ DOWNLOAD JPG — download receipt as image file
+// ─────────────────────────────────────────────────────────────
+router.get( '/snapshots/:id/download-jpg',          cartController.downloadReceiptJpg);
 
 module.exports = router;
