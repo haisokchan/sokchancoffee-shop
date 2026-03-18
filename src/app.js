@@ -6,22 +6,17 @@ require('dotenv').config();
 
 const app = express();
 
-/**
- * ✅ FIX: CORS now allows both localhost AND Render production URL
- */
 const allowedOrigins = [
   'http://localhost:4200',
   'http://localhost:3000',
-  'https://sokchancoffee-shop.onrender.com',  // ✅ production
+  'https://sokchancoffee-shop.onrender.com',
+  'https://haisokchan.github.io',  // ✅ Added
 ];
 
 const corsOptions = {
   origin: (origin, cb) => {
-    // Allow requests with no origin (Postman, mobile apps, server-to-server)
     if (!origin) return cb(null, true);
-
     if (allowedOrigins.includes(origin)) return cb(null, true);
-
     return cb(new Error(`CORS blocked: ${origin}`), false);
   },
   credentials: true,
