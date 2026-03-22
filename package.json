@@ -9,6 +9,7 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^143.0.4",
     "axios": "^1.13.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -20,7 +21,7 @@
     "multer": "^2.0.2",
     "node-html-to-image": "^5.0.0",
     "puppeteer": "^24.39.1",
-    "puppeteer-core": "^24.39.1"
+    "puppeteer-core": "^24.40.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
